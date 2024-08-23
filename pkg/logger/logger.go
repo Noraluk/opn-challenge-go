@@ -31,12 +31,10 @@ type logger struct {
 func Init(lvl string) error {
 	logger := logrus.New()
 
-	log.Println(lvl)
 	level, err := logrus.ParseLevel(lvl)
 	if err != nil {
 		return err
 	}
-	log.Println(level)
 
 	logger.SetLevel(level)
 	logger.SetFormatter(&logrus.TextFormatter{

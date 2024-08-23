@@ -1,3 +1,6 @@
 omise:
-  public_key: pkey_test_60ucjrc7goes6e75dw1
-  secret_key: skey_test_60ucjt7ftcrohg7sahs
+  public_key: pub_key
+  secret_key: secret
+
+log_level: info
+currency: thb

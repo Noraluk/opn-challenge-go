@@ -5,7 +5,9 @@ import (
 )
 
 type Config struct {
-	Omise omise `mapstructure:"omise"`
+	Omise    omise  `mapstructure:"omise"`
+	LogLevel string `mapstructure:"log_level"`
+	Currency string `mapstructure:"currency"`
 }
 
 type omise struct {

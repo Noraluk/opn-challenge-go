@@ -3,7 +3,6 @@ package services
 import (
 	"challenge-go/cipher"
 	"challenge-go/models"
-	"challenge-go/pkg/config"
 	"challenge-go/pkg/logger"
 	myOmise "challenge-go/pkg/omise"
 	"container/heap"
@@ -25,15 +24,12 @@ type DonationService interface {
 }
 
 type donationService struct {
-	config      config.Config
 	omiseClient myOmise.OmiseClient
 	logger      logger.Logger
 }
 
 func NewDonationService(omiseClient myOmise.OmiseClient) DonationService {
-	conf := config.GetConfig()
 	return &donationService{
-		config:      conf,
 		omiseClient: omiseClient,
 		logger:      logger.WithPrefix("service/donation"),
 	}
@@ -108,7 +104,7 @@ func (s donationService) MakeDonations(filePath string, currency string) error {
 			customer := models.Customer{}
 			err = customer.SetCustomer(record)
 			if err != nil {
-				s.logger.Wrap("set customer, got err: %v", err).Error()
+				s.logger.Wrap("set customer, got err: %v", err).Debug()
 				return
 			}
 
@@ -122,13 +118,13 @@ func (s donationService) MakeDonations(filePath string, currency string) error {
 
 			card, err := s.createCard(customer)
 			if err != nil {
-				s.logger.Wrap("create card, got err: %v", err).Error()
+				s.logger.Wrap("create card, got err: %v", err).Debug()
 				return
 			}
 
 			_, err = s.createCharge(customer.Amount, currency, card.ID)
 			if err != nil {
-				s.logger.Wrap("create charge, got err: %v", err).Error()
+				s.logger.Wrap("create charge, got err: %v", err).Debug()
 				return
 			}
 
@@ -191,7 +187,7 @@ func (s donationService) showSummary(successfulDonation int64, faultyDonation in
 	}
 
 	for i := len(sortedCustomers) - 1; i >= 0; i-- {
-		if i == 0 {
+		if i == len(sortedCustomers)-1 {
 			t.AppendRow(table.Row{"top donors:    ", sortedCustomers[i].Name})
 		} else {
 			t.AppendRow(table.Row{"", sortedCustomers[i].Name})
