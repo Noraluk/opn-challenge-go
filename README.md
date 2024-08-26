@@ -15,8 +15,8 @@ amount. The entire list is also encrypted using NSA-proof variant of the
 
 ### CONTENTS
 
-* `data/fng.csv.rot128` - A ROT-128 encrypted CSV file.
-* `cipher/rot128.go` - Sample ROT-128 encrypt-/decrypter.
+- `data/fng.csv.rot128` - A ROT-128 encrypted CSV file.
+- `cipher/rot128.go` - Sample ROT-128 encrypt-/decrypter.
 
 ### EXERCISE
 
@@ -47,23 +47,43 @@ done.
 
 **Requirements:**
 
-* Decrypt the file using a simple [ROT-128][2] algorithm.
-* Make donations by creating a Charge via the [Charge API][0] for each row in the
+- Decrypt the file using a simple [ROT-128][2] algorithm.
+- Make donations by creating a Charge via the [Charge API][0] for each row in the
   decrypted CSV.
-* Produce a brief summary at the end.
-* Handle errors gracefully, without stopping the entire process.
-* Writes readable and maintainable code.
+- Produce a brief summary at the end.
+- Handle errors gracefully, without stopping the entire process.
+- Writes readable and maintainable code.
 
 **Bonus:**
 
-* Have a good Go package structure.
-* Be a good internet citizen and throttles the API call if we hit rate limit.
-* Run as fast as possible on a multi-core CPU.
-* Allocate as little memory as possible.
-* Complete the entire process without leaving large trace of Credit Card numbers
+- Have a good Go package structure.
+- Be a good internet citizen and throttles the API call if we hit rate limit.
+- Run as fast as possible on a multi-core CPU.
+- Allocate as little memory as possible.
+- Complete the entire process without leaving large trace of Credit Card numbers
   in memory, or on disk.
-* Ensure reproducible builds on your workspace.
+- Ensure reproducible builds on your workspace.
 
- [0]: https://www.omise.co/charges-api
- [1]: https://en.wikipedia.org/wiki/Caesar_cipher
- [2]: https://play.golang.org/p/dCWYyWPHwj4
+[0]: https://www.omise.co/charges-api
+[1]: https://en.wikipedia.org/wiki/Caesar_cipher
+[2]: https://play.golang.org/p/dCWYyWPHwj4
+
+### How to run it
+
+1. Please fill the public key and secret key of OPN into config/config.yaml
+2. You can run by:
+
+```
+./go-tamboon ./data/fng.1000.csv.rot128
+```
+
+or
+
+```
+go run main.go ./data/fng.1000.csv.rot128
+```
+
+### FYI
+
+1. Because I use credential unpaid user when I run the code I found the 403 response after I run customers more than 60-70 ( I predict ) from the omise which means it is the limitation of the unpaid user.
+2. I set the default log level to info level, so If you want to see log you can change the log level in config.yaml to debug.
